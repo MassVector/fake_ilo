@@ -1,0 +1,12 @@
+[Unit]
+Description=Fake ILO service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/bin/python3 /opt/zvirt/fake_ilo/bin/fake_ilo.py
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
