@@ -39,14 +39,16 @@ def set_vm_status(vmname, vmstatus, vms_service, zVirtParams):
 def readConf():
     #read conf file
     paramsFile = open("/opt/zvirt/fake_ilo/fake_ilo.conf", "r")
-
-    zVirtURL = paramsFile.readline().replace("\n","")
-    zVirtUsername = paramsFile.readline().replace("\n","")
-    zVirtPasswd = paramsFile.readline().replace("\n","")
-    zVirtCAcrt = paramsFile.readline().replace("\n","")
-    zVirtServerCRT = paramsFile.readline().replace("\n","")
-    zVirtServerKEY = paramsFile.readline().replace("\n","")
-
+    try:
+        zVirtURL = paramsFile.readline().replace("url=","").replace("\n","")
+        zVirtUsername = paramsFile.readline().replace("username=","").replace("\n","")
+        zVirtPasswd = paramsFile.readline().replace("password=","").replace("\n","")
+        zVirtCAcrt = paramsFile.readline().replace("cadir=","").replace("\n","")
+        zVirtServerCRT = paramsFile.readline().replace("crtdir=","").replace("\n","")
+        zVirtServerKEY = paramsFile.readline().replace("keydir=","").replace("\n","")
+    except:
+        print('Conf file ReadError')
+        logprint('Conf file ReadError')
     paramsFile.close()
     #prepare dict
     zVirtParams = {'URL' : '{}'.format(zVirtURL), 'User' : '{}'.format(zVirtUsername), 'Passwd' : '{}'.format(zVirtPasswd), 'CA' : '{}'.format(zVirtCAcrt), 'CRT' : '{}'.format(zVirtServerCRT), 'KEY' : '{}'.format(zVirtServerKEY)}
